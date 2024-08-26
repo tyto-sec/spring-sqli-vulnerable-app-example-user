@@ -50,7 +50,9 @@ public class SecureUserRepositoryImpl implements UserRepository {
     @Override
     public void insertUser(User user) {
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-        jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
+        if (findByUsername(user.getUsername()).isEmpty()){
+            jdbcTemplate.update(sql, user.getUsername(), user.getPassword());
+        }
     }
 
 }
